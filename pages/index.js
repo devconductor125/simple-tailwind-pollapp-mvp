@@ -28,8 +28,8 @@ export default function Login() {
     }
   };
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden">
-      <div className="w-full p-6 bg-white rounded-md shadow-xl drop-shadow-2xl lg:max-w-xl">
+    <div className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden px-4">
+      <div className="w-full p-6 bg-white rounded-md shadow-xl drop-shadow-2xl md:max-w-xl ">
         <h1 className="text-3xl font-bold text-center flex justify-center text-gray-700">
           <Image
             width={100}

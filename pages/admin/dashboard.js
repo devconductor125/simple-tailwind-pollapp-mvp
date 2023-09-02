@@ -113,7 +113,14 @@ export default function Home() {
           poll: polls[activeIndex],
         })
         .then((res) => {
-          console.log(res.data);
+          const totalPolls = [...polls];
+          totalPolls.splice(activeIndex, 1);
+          setPolls(totalPolls);
+          setActiveIndex(0);
+          setTitle("");
+          setDescription("");
+          setOptions([]);
+          initContent(totalPolls, 0);
         });
   };
 

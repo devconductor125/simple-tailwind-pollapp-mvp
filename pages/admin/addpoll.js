@@ -51,6 +51,7 @@ export default function AddPoll() {
       })
       .then((response) => {
         console.log(response);
+        alert("New poll created");
       });
   };
 
