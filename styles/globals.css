@@ -18,3 +18,9 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+.active {
+  background-color: rgba(23, 23, 236, 0.945);
+  color: white;
+}

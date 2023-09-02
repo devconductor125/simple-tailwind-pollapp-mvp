@@ -4,7 +4,14 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        sidebar: "100px auto",
+      },
+      gridTemplateRows: {
+        header: "64px auto",
+      },
+    },
   },
-  plugins: [],
-}
+  plugins: [require("@tailwindcss/aspect-ratio")],
+};

@@ -7,7 +7,7 @@ Execute in the project directory:
     npm install
 
 and install all dependencies.
-
+    
 ## Execute frontend locally
     
     npm run dev
