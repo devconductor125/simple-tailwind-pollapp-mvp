@@ -86,6 +86,40 @@ export default function Home() {
     return null;
   };
 
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+    index,
+    payload,
+  }) => {
+    const RADIAN = Math.PI / 180;
+    // Adjust the radius to be in the center of the pie region
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.3;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    // Calculate the rotation of the label
+    const degree = midAngle;
+    const rotation = degree < 0 ? degree + 90 : degree - 90;
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="black"
+        textAnchor={x > cx ? "start" : "end"}
+        dominantBaseline="central"
+        className="font-bold"
+        // transform={`rotate(${rotation},${x},${y})`}
+      >
+        {`${payload.name}: ${payload.value}`}
+      </text>
+    );
+  };
+
   const handleVote = (index) => {
     let userInfo = JSON.parse(localStorage.getItem("user_info"));
 
@@ -131,23 +165,7 @@ export default function Home() {
         <div className="col-end-5 col-span-3">
           <div className="grid grid-cols-2 gap-3 rounded overflow-hidden shadow-lg p-4">
             <div className=" md:ml-4">
-              {/* <div className="text-2xl flex items-center ">
-                <SparklesIcon
-                  width={20}
-                  height={20}
-                  className="text-red-600 mr-2"
-                />{" "}
-                <span>Title</span>
-              </div> */}
               <p className="text-3xl my-2 font-bold">{title}</p>
-              {/* <div className="text-2xl flex items-center  mt-5">
-                <BookOpenIcon
-                  width={20}
-                  height={20}
-                  className="text-red-600 mr-2"
-                />{" "}
-                <span>Description</span>
-              </div> */}
               <p className="text-xl my-2">{description}</p>
               <p className="text-2xl mt-8 text-red-600">Voting here</p>
               {options.length > 0 &&
@@ -197,6 +215,8 @@ export default function Home() {
                         dataKey="value"
                         nameKey="name"
                         cx="50%"
+                        labelLine={false}
+                        label={renderCustomizedLabel}
                         cy="50%"
                         fill="#8884d8"
                       >
@@ -204,7 +224,7 @@ export default function Home() {
                           <Cell key={`cell-${index}`} fill={colors[index]} />
                         ))}
                       </Pie>
-                      <Tooltip content={<CustomTooltip />} />
+                      {/* <Tooltip content={<CustomTooltip />} /> */}
                     </PieChart>
                   </ResponsiveContainer>
                 </div>

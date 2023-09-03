@@ -85,21 +85,28 @@ export default function Home() {
     outerRadius,
     percent,
     index,
+    payload,
   }) => {
     const RADIAN = Math.PI / 180;
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    // Adjust the radius to be in the center of the pie region
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.3;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
+    // Calculate the rotation of the label
+    const degree = midAngle;
+    const rotation = degree < 0 ? degree + 90 : degree - 90;
     return (
       <text
         x={x}
         y={y}
-        fill="white"
+        fill="black"
         textAnchor={x > cx ? "start" : "end"}
         dominantBaseline="central"
+        className="font-bold"
+        // transform={`rotate(${rotation},${x},${y})`}
       >
-        {`${(percent * 100).toFixed(0)}%`}
+        {`${payload.name}: ${payload.value}`}
       </text>
     );
   };
@@ -130,7 +137,7 @@ export default function Home() {
         <div className="col-start-1 col-span-1 h-full max-h-[600px]  shadow-md p-3">
           <h2 className="text-2xl my-3">Polls</h2>
           <div className="max-h-[calc(100%-70px)] overflow-hidden overflow-y-auto ">
-            <div className="w-full bg-white rounded-lg shadow ">
+            <div className="w-full bg-white rounded-lg shadow bg-transparent">
               <ul className="divide-y-2 divide-gray-100 cursor-pointer ">
                 {polls.length > 0 &&
                   polls.map((item, index) => {
@@ -138,7 +145,7 @@ export default function Home() {
                       <li
                         key={index}
                         className={classNames(
-                          "p-3 hover:bg-slate-400 rounded-md",
+                          "p-3 hover:bg-slate-400 rounded-md my-1 shadow-sm bg-gray-200",
                           index === activeIndex ? "active" : ""
                         )}
                         onClick={() => pollHandler(index)}
@@ -265,12 +272,14 @@ export default function Home() {
                         cx="50%"
                         cy="50%"
                         fill="#8884d8"
+                        labelLine={false}
+                        label={renderCustomizedLabel}
                       >
                         {voteData.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={colors[index]} />
                         ))}
                       </Pie>
-                      <Tooltip content={<CustomTooltip />} />
+                      {/* <Tooltip content={<CustomTooltip />} /> */}
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
